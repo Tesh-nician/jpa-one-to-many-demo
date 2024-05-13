@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotNull;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+
 @Entity
 @Table(name = "comments")
 public class Comment extends AuditModel {
@@ -22,6 +23,16 @@ public class Comment extends AuditModel {
 
     public Long getId() {
         return id;
+    }
+
+    public Comment(Long id, String text, Post post) {
+        this.id = id;
+        this.text = text;
+        this.post = post;
+    }
+
+    public Comment(String text) {
+        this.text = text;
     }
 
     public void setId(Long id) {

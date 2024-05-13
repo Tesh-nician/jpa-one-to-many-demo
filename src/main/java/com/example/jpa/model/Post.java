@@ -2,6 +2,7 @@ package com.example.jpa.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+
 @Entity
 @Table(name = "posts")
 public class Post extends AuditModel {
@@ -19,6 +20,22 @@ public class Post extends AuditModel {
     @Lob
     private String content;
 
+    public Post() {
+    }
+
+    public Post(Long id, String title, String description, String content) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.content = content;
+    }
+
+    public Post(String title, String description, String content) {
+        this.title = title;
+        this.description = description;
+        this.content = content;
+    }
+
     public Long getId() {
         return id;
     }
@@ -27,7 +44,7 @@ public class Post extends AuditModel {
         this.id = id;
     }
 
-    public @NotNull @Size(max = 100) String getTitle() {
+    public String getTitle() {
         return title;
     }
 
@@ -49,6 +66,16 @@ public class Post extends AuditModel {
 
     public void setContent(@NotNull String content) {
         this.content = content;
+    }
+
+    @Override
+    public String toString() {
+        return "Post{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", content='" + content + '\'' +
+                '}';
     }
 
     // Getters en Setters (weggelaten omwille van de beknoptheid): done with autogenerate
