@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 
+import java.util.Optional;
+
 @RestController
 public class CommentController {
 
@@ -25,6 +27,20 @@ public class CommentController {
             "postId") Long postId, Pageable pageable) {
         return commentRepository.findByPostId(postId, pageable);
     }
+//Toegevoegd door Jonathan om individuele comments terug te krijgen
+    @GetMapping("/posts/{postId}/comments/{commentId}")
+    public ResponseEntity<Comment> getCommentByPostIdAndCommentId(@PathVariable Long postId, @PathVariable Long commentId) {
+        Optional<Comment> comment = commentRepository.findByIdAndPostId(commentId, postId);
+        if (comment.isPresent()) {
+            return ResponseEntity.ok(comment.get());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+
+
+
 
     @PostMapping("/posts/{postId}/comments")
     public Comment createComment(@PathVariable (value = "postId") Long
