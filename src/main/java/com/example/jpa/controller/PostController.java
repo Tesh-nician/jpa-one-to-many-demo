@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 
@@ -16,10 +17,13 @@ public class PostController {
     @Autowired
     private PostRepository postRepository;
 
-    @GetMapping("/posts")
-    public Page<Post> getAllPosts(Pageable pageable) {
-        return postRepository.findAll(pageable);
+    @GetMapping("/")
+    public String viewHomePage(Model model) {
+        model.addAttribute("listPosts", postRepository.findAll());
+        return "index";
     }
+
+
 
     @PostMapping("/posts")
     public Post createPost(@Valid @RequestBody Post post) {
